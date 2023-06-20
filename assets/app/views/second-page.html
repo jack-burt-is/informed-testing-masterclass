@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+  GOV.UK prototype kit
+{% endblock %}
+
+{% block content %}
+
+<main id="content" role="main">
+  <div class="grid-row">
+    <div class="column-two-thirds">
+      <h2 class="heading-medium">Second Page</h2>
+	    <p>Please enter your name:</p>
+
+      {{ errorMessages }}
+    
+      <form method="post">
+        <input type="text" name="name">
+        <input type="submit" value="Submit">
+      </form>
+
+    </div>
+  </div>
+</main>
+
+{% endblock %}
+
+
