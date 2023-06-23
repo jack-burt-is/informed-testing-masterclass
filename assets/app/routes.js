@@ -3,36 +3,35 @@ var router = express.Router()
 
 // Route index page
 router.get('/', function (req, res) {
-  res.render('first-page')
+  res.render('login')
 })
 
-router.get('/startform', function (req, res) {
-  res.render('first-page')
-})
+router.post('/', function(req, res) {
 
-router.get('/entername', function (req, res) {
-  res.render('second-page')
-})
+  let passwordErr, emailErr;
 
-router.get('/namesubmitted', function (req, res) {
-  res.render('third-page')
-})
+  if (!req.body.password) {
+    passwordErr = "Enter a password";
+  }
 
-router.post('/entername', function(req, res) {
+  if (!req.body.email || !req.body.email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
+    emailErr = "Enter a valid email address"
+  }
 
-  if (req.body.name.length < 5) {
+  if (emailErr || passwordErr) {
     var viewModel = {
-      errorMessages: "Your name is too short..."
+      emailError: emailErr,
+      passwordError: passwordErr,
+      email: req.body.email
     };
-    res.render('second-page', viewModel);
+    res.render('login', viewModel);
   } else {
-    res.render('third-page');
-
-    // insert the data into the database
+    var viewModel = {
+      email: req.body.email
+    }
+    res.render('login-success', viewModel);
   }
 
 })
-
-// add your routes here
 
 module.exports = router
